@@ -9,9 +9,29 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #fff;
-            color: #222;
+            background: #ffffff;
+            color: #000000;
             transition: background 0.3s, color 0.3s;
+            background-image: url('https://miro.medium.com/1*Kq-Ap-La1e5Ex2KOyPQOPQ.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+        body.dark-mode, .main-content.dark-mode {
+            background: #181818;
+            color: #f1f1f1;
+            background-image: url('https://olivierbergeron.com/wp-content/uploads/2020/05/aurora-petursey-iceland-bw-1000px-8242.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 0;
+            pointer-events: none;
         }
         .sidebar {
             position: fixed;
@@ -54,6 +74,8 @@
             padding: 40px 32px;
             min-height: 100vh;
             transition: background 0.3s, color 0.3s, margin-left 0.3s;
+            position: relative;
+            z-index: 1;
         }
         .subscribe-btn {
             display: inline-block;
@@ -109,11 +131,6 @@
             border-radius: 2px;
             transition: 0.3s;
         }
-        /* Dark mode styles */
-        body.dark-mode, .main-content.dark-mode {
-            background: #181818;
-            color: #f1f1f1;
-        }
         .sidebar.dark-mode {
             background: #111;
             color: #fff;
@@ -139,7 +156,10 @@
         .menu-btn.dark-mode span {
             background: #fff;
         }
-        /* Responsive */
+        .sidebar, .main-content, .menu-btn {
+            position: relative;
+            z-index: 1;
+        }
         @media (max-width: 700px) {
             .sidebar {
                 width: 180px;
