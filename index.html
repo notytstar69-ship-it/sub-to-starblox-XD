@@ -17,6 +17,11 @@
             --card-bg: rgba(255,255,255,0.06);
             --glass: rgba(255,255,255,0.06);
             --radius: 12px;
+
+            --green: #28a745;
+            --yellow: #ffc107;
+            --blue:  #007bff;
+            --purple:#6f42c1;
         }
 
         /* Base */
@@ -158,6 +163,33 @@
         }
         .option input{ transform:scale(1.02); }
 
+        /* Donate section styles */
+        .donate-grid{
+            display:grid;
+            grid-template-columns: repeat(2, minmax(120px, 1fr));
+            gap:12px;
+            margin-top:12px;
+        }
+        .donate-btn{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:12px 10px;
+            border-radius:10px;
+            color:#fff;
+            font-weight:700;
+            cursor:pointer;
+            border:0;
+            box-shadow: 0 8px 20px rgba(2,6,23,0.12);
+            transition: transform .12s ease, box-shadow .16s ease;
+            text-decoration:none;
+        }
+        .donate-btn:active{ transform: translateY(2px) scale(.995); }
+        .donate-green{ background: linear-gradient(180deg,var(--green), #1f7a35); }
+        .donate-yellow{ background: linear-gradient(180deg,var(--yellow), #e6a700); color:#111; }
+        .donate-blue{ background: linear-gradient(180deg,var(--blue), #0056d6); }
+        .donate-purple{ background: linear-gradient(180deg,var(--purple), #5a2da8); }
+
         /* Footer */
         footer{ margin-top:48px;color:var(--muted);font-size:13px;text-align:center;padding:26px 0; }
 
@@ -166,12 +198,14 @@
             .hero{ flex-direction:column; gap:18px }
             .hero-left{ max-width:100% }
             .sidebar{ width:220px }
+            .donate-grid{ grid-template-columns: 1fr 1fr; }
         }
         @media (max-width:700px){
             .sidebar{ position:fixed; left:0; top:0; transform:translateX(-100%); height:100vh; width:200px; z-index:40; }
             .sidebar.open{ transform:translateX(0) }
             .main{ padding:18px }
             .menu-btn{ display:flex }
+            .donate-grid{ grid-template-columns: 1fr 1fr; }
         }
 
         /* Menu button (mobile) */
@@ -199,18 +233,24 @@
             </div>
 
             <nav class="nav" aria-label="Primary">
-                <button id="homeBtn" class="active" onclick="showSection('home')">
+                <button id="homeBtn" class="active" onclick="showSection('home')" aria-controls="homeSection" aria-expanded="true">
                     <!-- home icon -->
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     Home
                 </button>
 
-                <button id="settingBtn" onclick="showSection('setting')">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06A2 2 0 1 1 2.3 17.9l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09c.67 0 1.25-.38 1.51-1a1.65 1.65 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 6.4 2.3l.06.06c.4.4 1 .54 1.51.33.64-.24 1.32-.24 1.96 0 .5.21 1.11.07 1.51-.33l.06-.06A2 2 0 1 1 15.6 4.1l-.06.06c-.4.4-.54 1.01-.33 1.51.24.64.24 1.32 0 1.96-.21.5-.07 1.11.33 1.51l.06.06A2 2 0 1 1 20.7 9.1l-.06.06c-.4.4-.54 1.01-.33 1.51.24.64.24 1.32 0 1.96-.2.5-.06 1.11.34 1.51z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <button id="settingBtn" onclick="showSection('setting')" aria-controls="settingSection">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     Setting
                 </button>
 
-                <button id="creditBtn" onclick="showSection('credit')">
+                <!-- new Donate Us button in sidebar -->
+                <button id="donateBtn" onclick="showSection('donate')" aria-controls="donateSection">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M5 7h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Donate Us
+                </button>
+
+                <button id="creditBtn" onclick="showSection('credit')" aria-controls="creditSection">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M5 7h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     Credit
                 </button>
@@ -226,7 +266,7 @@
         <main class="main">
             <div class="container">
 
-                <!-- hero -->
+                <!-- hero / Home -->
                 <section class="hero" id="homeSection">
                     <div class="hero-left">
                         <div class="eyebrow">Welcome</div>
@@ -266,6 +306,28 @@
                             <div style="margin-top:10px">
                                 <button onclick="copyLink()" class="watch">Copy link</button>
                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Donate section -->
+                <section id="donateSection" style="display:none;">
+                    <h2>Donate Us</h2>
+                    <div class="card">
+                        <p class="muted">Support the channel by purchasing game passes. Click any option to open the Robux pass page.</p>
+
+                        <div class="donate-grid" role="list">
+                            <a class="donate-btn donate-green" role="listitem" aria-label="5 Robux" title="5 Robux" href="https://www.roblox.com/game-pass/217363765/pass" target="_blank" rel="noopener">5 Robux</a>
+
+                            <a class="donate-btn donate-green" role="listitem" aria-label="10 Robux" title="10 Robux" href="https://www.roblox.com/game-pass/217364990/Pro-pass" target="_blank" rel="noopener">10 Robux</a>
+
+                            <a class="donate-btn donate-green" role="listitem" aria-label="100 Robux" title="10 Robux" href="https://www.roblox.com/game-pass/1233346886/100" target="_blank" rel="noopener">100 Robux</a>
+
+                            <a class="donate-btn donate-yellow" role="listitem" aria-label="1k Robux" title="1k Robux" href="https://www.roblox.com/game-pass/217366522/1000" target="_blank" rel="noopener">1k Robux</a>
+
+                            <a class="donate-btn donate-blue" role="listitem" aria-label="10k Robux" title="10k Robux" href="https://www.roblox.com/game-pass/1324030094/10000" target="_blank" rel="noopener">10k Robux</a>
+
+                            <a class="donate-btn donate-purple" role="listitem" aria-label="100k Robux" title="100k Robux" href="https://www.roblox.com/game-pass/228150870/Ultra-op-pass" target="_blank" rel="noopener">100k Robux</a>
                         </div>
                     </div>
                 </section>
@@ -314,25 +376,22 @@
 
         // Navigation
         function showSection(name){
-            const sections = ['home','setting','credit'];
+            const sections = ['home','setting','donate','credit'];
             sections.forEach(s=>{
-                const el = document.getElementById(s + 'Section') || document.getElementById(s + 'Section') /*safe*/;
+                const el = document.getElementById(s + 'Section');
+                if(el) el.style.display = (s === name) ? '' : 'none';
             });
 
-            // hide all
-            document.getElementById('homeSection').style.display = name === 'home' ? '' : 'none';
-            document.getElementById('settingSection').style.display = name === 'setting' ? '' : 'none';
-            document.getElementById('creditSection').style.display = name === 'credit' ? '' : 'none';
-
-            // active state
-            ['home','setting','credit'].forEach(k=>{
+            // active state for buttons
+            ['home','setting','donate','credit'].forEach(k=>{
                 const btn = document.getElementById(k + 'Btn');
                 if(btn) btn.classList.toggle('active', k === name);
             });
 
             // close mobile sidebar after select
             if(window.innerWidth <= 700){
-                document.getElementById('sidebar').classList.remove('open');
+                const sb = document.getElementById('sidebar');
+                sb.classList.remove('open');
             }
         }
 
